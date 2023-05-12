@@ -34,13 +34,45 @@ class LevelOne extends Phaser.Scene {
         this.load.image("ground", "ground.png");
     }
     create() {
-        this.larry = this.physics.add.sprite(100, 350, 'larry');
+        this.larry = this.physics.add.sprite(100, 350, 'larry').setScale(0.5);
         //this.larry.setBounce(0.2);
         this.platforms = this.physics.add.staticGroup();
         this.platforms.create(400, 600, 'ground').setScale(2).refreshBody();
 
         this.larry.setCollideWorldBounds(true);
         this.physics.add.collider(this.larry, this.platforms);
+
+        this.cursors = this.input.keyboard.createCursorKeys();
+    }
+    update ()
+    {
+        const { left, right, up } = this.cursors;
+
+        if (left.isDown)
+        {
+            this.larry.setVelocityX(-160);
+
+            
+        }
+        else if (right.isDown)
+        {
+            this.larry.setVelocityX(160);
+
+            
+        }
+        else
+        {
+            this.larry.setVelocityX(0);
+
+           
+        }
+
+        if (up.isDown && this.larry.body.touching.down)
+        {
+            this.larry.setVelocityY(-330);
+        }
+
+        
     }
 }
 
@@ -51,7 +83,7 @@ new Phaser.Game({
     physics: {
         default: 'arcade',
         arcade: {
-            gravity: { y: 300 },
+            gravity: { y: 500 },
             debug: true
         }
     },
