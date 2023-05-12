@@ -6,7 +6,8 @@ class Intro extends Phaser.Scene {
         this.load.path = "./assets/";
         this.load.image("beer", "beer.png");
         this.load.image("ball", "soccer.png");
-        this.load.image("larry", "t-rex.png");
+        this.load.image("larry", "dinosaur.png");
+        this.load.image("ground", "ground.png");
     }
     create() {
         // center the text to the middle of the screen. code from https://www.stephengarside.co.uk/blog/phaser-3-center-text-in-middle-of-screen/
@@ -29,23 +30,29 @@ class LevelOne extends Phaser.Scene {
         this.load.path = "./assets/";
         this.load.image("beer", "beer.png");
         this.load.image("ball", "soccer.png");
-        this.load.image("larry", "t-rex.png");
+        this.load.image("larry", "dinosaur.png");
+        this.load.image("ground", "ground.png");
     }
     create() {
-        this.larry = this.physics.add.sprite(100, 450, 'larry');
-        this.ground = this.add.rectangle()
+        this.larry = this.physics.add.sprite(100, 350, 'larry');
+        //this.larry.setBounce(0.2);
+        this.platforms = this.physics.add.staticGroup();
+        this.platforms.create(400, 600, 'ground').setScale(2).refreshBody();
+
+        this.larry.setCollideWorldBounds(true);
+        this.physics.add.collider(this.larry, this.platforms);
     }
 }
 
 new Phaser.Game({
-    width: 800,
+    width: 1000,
     height: 600,
     backgroundColor: 0x9fc5e8,
     physics: {
         default: 'arcade',
         arcade: {
-            //gravity: { y: 300 },
-            debug: false
+            gravity: { y: 300 },
+            debug: true
         }
     },
     scene: [LevelOne, Intro],
