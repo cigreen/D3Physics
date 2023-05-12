@@ -40,9 +40,32 @@ class LevelOne extends Phaser.Scene {
         this.platforms.create(400, 600, 'ground').setScale(2).refreshBody();
 
         this.larry.setCollideWorldBounds(true);
-        this.physics.add.collider(this.larry, this.platforms);
 
+        this.balls = this.physics.add.group({
+            key: 'ball',
+            repeat: 6,
+            setXY: { x: 300, y: 0, stepX: 150 },
+            bounceX: 1,
+            //bounceY: 1,
+            collideWorldBounds: true,
+            velocityX: -100
+            
+        });
+        for (const ball of this.balls.getChildren())
+        {
+            ball.setBounceY(Phaser.Math.FloatBetween(0.4, 0.5));
+            ball.setScale(0.1);
+        }
         this.cursors = this.input.keyboard.createCursorKeys();
+
+        this.physics.add.collider(this.larry, this.platforms);
+        this.physics.add.collider(this.platforms, this.balls);
+        this.physics.add.overlap(this.larry, this.balls, this.touchBall, null, this);
+    }
+    touchBall (larry, ball)
+    {
+        ball.disableBody(true, true);
+        this.scene.start('levelone')
     }
     update ()
     {
@@ -50,28 +73,22 @@ class LevelOne extends Phaser.Scene {
 
         if (left.isDown)
         {
-            this.larry.setVelocityX(-160);
-
-            
+            this.larry.setVelocityX(-160);    
         }
         else if (right.isDown)
         {
-            this.larry.setVelocityX(160);
-
-            
+            this.larry.setVelocityX(160);   
         }
         else
         {
-            this.larry.setVelocityX(0);
-
-           
+            this.larry.setVelocityX(0);  
         }
 
         if (up.isDown && this.larry.body.touching.down)
         {
             this.larry.setVelocityY(-330);
         }
-
+        
         
     }
 }
@@ -83,7 +100,7 @@ new Phaser.Game({
     physics: {
         default: 'arcade',
         arcade: {
-            gravity: { y: 500 },
+            gravity: { y: 400 },
             debug: true
         }
     },
