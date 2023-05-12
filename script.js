@@ -34,7 +34,10 @@ class LevelOne extends Phaser.Scene {
         this.load.image("ground", "ground.png");
     }
     create() {
+        const beer = this.physics.add.staticImage(400, 450, 'beer');
         this.larry = this.physics.add.sprite(100, 350, 'larry').setScale(0.5);
+        // after 10 seconds, go to intro SWITCH THAT THIS WORKS POG
+        this.time.delayedCall(10000, () => this.scene.start('intro'));
         //this.larry.setBounce(0.2);
         this.platforms = this.physics.add.staticGroup();
         this.platforms.create(400, 600, 'ground').setScale(2).refreshBody();
@@ -60,13 +63,32 @@ class LevelOne extends Phaser.Scene {
 
         this.physics.add.collider(this.larry, this.platforms);
         this.physics.add.collider(this.platforms, this.balls);
-        this.physics.add.overlap(this.larry, this.balls, this.touchBall, null, this);
+        // set the below code to a constant and add the touchBall code to it. 
+        const touchBall = this.physics.add.overlap(this.larry, this.balls, (larry, ball) =>
+        {
+            ball.disableBody(true, true);
+            this.scene.start('levelone');
+        });
+        // when colliding with beer, become invulnerable
+        this.physics.add.overlap(this.larry, beer, (larry, _beer) =>
+        {
+            touchBall.active = false;
+            larry.setTintFill(0xffff00);
+            _beer.destroy();
+            this.time.delayedCall(5000, () =>
+            {
+                touchBall.active = true;
+                larry.clearTint();
+            });
+        });
     }
+/* this is crashing the game with beer
     touchBall (larry, ball)
     {
         ball.disableBody(true, true);
         this.scene.start('levelone')
     }
+*/
     update ()
     {
         const { left, right, up } = this.cursors;
