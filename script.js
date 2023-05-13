@@ -73,7 +73,7 @@ class LevelOne extends Phaser.Scene {
     create() {
         const beer = this.physics.add.image(800, 500, 'beer').setScale(0.2);
         this.larry = this.physics.add.sprite(100, 500, 'larry').setScale(0.5);
-       
+
         this.time.delayedCall(10000, () => this.scene.start('intro2'));
         this.platforms = this.physics.add.staticGroup();
         this.platforms.create(400, 600, 'ground').setScale(2).refreshBody();
@@ -120,6 +120,7 @@ class LevelOne extends Phaser.Scene {
 
     update ()
     {
+        let jumptimer = 1;
         const { left, right, up } = this.cursors;
 
         if (left.isDown)
@@ -135,11 +136,21 @@ class LevelOne extends Phaser.Scene {
             this.larry.setVelocityX(0);  
         }
 
+// first jump is a small jump, jumps after by holding down up button are long jumps.
+
         if (up.isDown && this.larry.body.touching.down)
         {
-            this.larry.setVelocityY(-330);
-        }
-        
+            if(Phaser.Input.Keyboard.DownDuration(this.cursors.up, 150))
+            {
+                this.larry.setVelocityY(-300);
+            }
+            else 
+            {
+                this.larry.setVelocityY(-430);
+            }
+            
+            //this.larry.setVelocityY(-330);
+        } 
         
     }
 }
@@ -222,7 +233,16 @@ class LevelTwo extends Phaser.Scene {
 
         if (up.isDown && this.larry.body.touching.down)
         {
-            this.larry.setVelocityY(-330);
+            if(Phaser.Input.Keyboard.DownDuration(this.cursors.up, 150))
+            {
+                this.larry.setVelocityY(-300);
+            }
+            else 
+            {
+                this.larry.setVelocityY(-430);
+            }
+            
+            //this.larry.setVelocityY(-330);
         }
         
         if (this.movingPlatform.x >= 600)
@@ -327,7 +347,16 @@ class LevelThree extends Phaser.Scene {
 
         if (up.isDown && this.larry.body.touching.down)
         {
-            this.larry.setVelocityY(-330);
+            if(Phaser.Input.Keyboard.DownDuration(this.cursors.up, 150))
+            {
+                this.larry.setVelocityY(-300);
+            }
+            else 
+            {
+                this.larry.setVelocityY(-430);
+            }
+            
+            //this.larry.setVelocityY(-330);
         }
         
         
