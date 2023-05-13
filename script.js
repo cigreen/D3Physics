@@ -13,10 +13,58 @@ class Intro extends Phaser.Scene {
         // center the text to the middle of the screen. code from https://www.stephengarside.co.uk/blog/phaser-3-center-text-in-middle-of-screen/
         let screenCenterX = this.cameras.main.worldView.x + this.cameras.main.width / 2;
         let screenCenterY = this.cameras.main.worldView.y + this.cameras.main.height / 2;
-        this.add.text(screenCenterX, screenCenterY, 'Click to begin.').setOrigin(0.5);
+        this.add.text(screenCenterX, screenCenterY, 'Click to begin level one.').setOrigin(0.5);
+        this.input.on('pointerdown', () => {
+            this.cameras.main.fadeOut(1000, 0,0,0);
+            this.time.delayedCall(1000, () => this.scene.start('levelone'));
+        });
+    }
+}
+
+class Intro2 extends Phaser.Scene {
+    constructor() {
+        super('intro2');
+    }
+    create() {
+        // center the text to the middle of the screen. code from https://www.stephengarside.co.uk/blog/phaser-3-center-text-in-middle-of-screen/
+        let screenCenterX = this.cameras.main.worldView.x + this.cameras.main.width / 2;
+        let screenCenterY = this.cameras.main.worldView.y + this.cameras.main.height / 2;
+        this.add.text(screenCenterX, screenCenterY, 'Click to begin level two.').setOrigin(0.5);
         this.input.on('pointerdown', () => {
             this.cameras.main.fadeOut(1000, 0,0,0);
             this.time.delayedCall(1000, () => this.scene.start('leveltwo'));
+        });
+    }
+}
+
+class Intro3 extends Phaser.Scene {
+    constructor() {
+        super('intro3');
+    }
+    create() {
+        // center the text to the middle of the screen. code from https://www.stephengarside.co.uk/blog/phaser-3-center-text-in-middle-of-screen/
+        let screenCenterX = this.cameras.main.worldView.x + this.cameras.main.width / 2;
+        let screenCenterY = this.cameras.main.worldView.y + this.cameras.main.height / 2;
+        this.add.text(screenCenterX, screenCenterY, 'Click to begin level three.').setOrigin(0.5);
+        this.input.on('pointerdown', () => {
+            this.cameras.main.fadeOut(1000, 0,0,0);
+            this.time.delayedCall(1000, () => this.scene.start('levelthree'));
+        });
+    }
+}
+
+class Ending extends Phaser.Scene {
+    constructor() {
+        super('ending');
+    }
+    create() {
+        // center the text to the middle of the screen. code from https://www.stephengarside.co.uk/blog/phaser-3-center-text-in-middle-of-screen/
+        let screenCenterX = this.cameras.main.worldView.x + this.cameras.main.width / 2;
+        let screenCenterY = this.cameras.main.worldView.y + this.cameras.main.height / 2;
+        this.add.text(screenCenterX, screenCenterY, 'The end. Click to restart.').setOrigin(0.5);
+        this.input.on('pointerdown', () => {
+            this.cameras.main.fadeOut(1000, 0,0,0);
+            this.time.delayedCall(1000, () => this.scene.start('intro'));
         });
     }
 }
@@ -26,19 +74,12 @@ class LevelOne extends Phaser.Scene {
         super('levelone');
     }
     // move to intro after getting your collision problem fixed.
-    preload() {
-        this.load.path = "./assets/";
-        this.load.image("beer", "beer.png");
-        this.load.image("ball", "soccer.png");
-        this.load.image("larry", "dinosaur.png");
-        this.load.image("ground", "ground.png");
-    }
     create() {
         const beer = this.physics.add.image(800, 500, 'beer').setScale(0.2);
         this.larry = this.physics.add.sprite(100, 350, 'larry').setScale(0.5);
        
         // after 10 seconds, go to intro SWITCH THAT THIS WORKS POG
-        this.time.delayedCall(10000, () => this.scene.start('intro'));
+        this.time.delayedCall(10000, () => this.scene.start('intro2'));
         this.platforms = this.physics.add.staticGroup();
         this.platforms.create(400, 600, 'ground').setScale(2).refreshBody();
 
@@ -112,20 +153,13 @@ class LevelTwo extends Phaser.Scene {
     constructor() {
         super('leveltwo');
     }
-    preload() {
-        this.load.path = "./assets/";
-        this.load.image("beer", "beer.png");
-        this.load.image("ball", "soccer.png");
-        this.load.image("larry", "dinosaur.png");
-        this.load.image("ground", "ground.png");
-    }
     // move to intro after getting your collision problem fixed.
     create() {
         const beer = this.physics.add.image(800, 500, 'beer').setScale(0.2);
         this.larry = this.physics.add.sprite(100, 350, 'larry').setScale(0.5);
        
         // after 10 seconds, go to intro SWITCH THAT THIS WORKS POG
-        this.time.delayedCall(10000, () => this.scene.start('intro'));
+        this.time.delayedCall(10000, () => this.scene.start('intro3'));
         this.platforms = this.physics.add.staticGroup();
         this.platforms.create(400, 600, 'ground').setScale(2).refreshBody();
 
@@ -215,13 +249,6 @@ class LevelThree extends Phaser.Scene {
         super('levelthree');
     }
     // move to intro after getting your collision problem fixed.
-    preload() {
-        this.load.path = "./assets/";
-        this.load.image("beer", "beer.png");
-        this.load.image("ball", "soccer.png");
-        this.load.image("larry", "dinosaur.png");
-        this.load.image("ground", "ground.png");
-    }
     create() {
         this.platformOne = this.physics.add.image(800, 400, 'ground').setScale(0.5);
         this.platformOne.setImmovable(true);
@@ -239,7 +266,7 @@ class LevelThree extends Phaser.Scene {
         this.larry = this.physics.add.sprite(100, 350, 'larry').setScale(0.5);
        
         // after 10 seconds, go to intro SWITCH THAT THIS WORKS POG
-        this.time.delayedCall(10000, () => this.scene.start('intro'));
+        this.time.delayedCall(10000, () => this.scene.start('ending'));
         this.platforms = this.physics.add.staticGroup();
         this.platforms.create(400, 600, 'ground').setScale(2).refreshBody();
 
@@ -329,5 +356,5 @@ new Phaser.Game({
             debug: true
         }
     },
-    scene: [LevelThree, LevelTwo, Intro, LevelOne],
+    scene: [Intro, LevelOne, Intro2, LevelTwo, Intro3, LevelThree, Ending],
 });
