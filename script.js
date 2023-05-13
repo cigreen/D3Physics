@@ -13,7 +13,28 @@ class Intro extends Phaser.Scene {
         // center the text to the middle of the screen. code from https://www.stephengarside.co.uk/blog/phaser-3-center-text-in-middle-of-screen/
         let screenCenterX = this.cameras.main.worldView.x + this.cameras.main.width / 2;
         let screenCenterY = this.cameras.main.worldView.y + this.cameras.main.height / 2;
-        this.add.text(screenCenterX, screenCenterY, 'Click to begin level one.').setOrigin(0.5);
+        this.add.text(screenCenterX, screenCenterY - 100, 'Larry the Dinosaur', {fontSize: 30}).setOrigin(0.5).setTint(0x000000);
+        this.add.text(screenCenterX, screenCenterY, 'Click to continue.').setOrigin(0.5).setTint(0x000000);
+        this.input.on('pointerdown', () => {
+            this.cameras.main.fadeOut(1000, 0,0,0);
+            this.time.delayedCall(1000, () => this.scene.start('controls'));
+        });
+    }
+}
+
+class Controls extends Phaser.Scene {
+    constructor() {
+        super('controls');
+    }
+    create() {
+        this.cameras.main.fadeIn(1000, 0, 0, 0);
+        let screenCenterX = this.cameras.main.worldView.x + this.cameras.main.width / 2;
+        let screenCenterY = this.cameras.main.worldView.y + this.cameras.main.height / 2;
+        this.add.text(100, 50, 'Controls', {fontSize: 25}).setOrigin(0.5).setTint(0x000000);
+        this.add.text(100, 100, 'Left/Right Arrowkey: Move right/left.').setTint(0x000000);
+        this.add.text(100, 150, 'Up Arrowkey: Jump. Holding down key allows for every jump after to be a super jump!').setTint(0x000000);
+        this.add.text(25, screenCenterY, 'Help Larry get home without being active! Dodge the soccer balls long enough to advance to the next level. Grabbing beer will make you immune to them for a few seconds! Good luck!').setTint(0x000000).setWordWrapWidth(1000);
+        this.add.text(screenCenterX, screenCenterY + 100, 'Click to begin level one.').setOrigin(0.5).setTint(0x000000);
         this.input.on('pointerdown', () => {
             this.cameras.main.fadeOut(1000, 0,0,0);
             this.time.delayedCall(1000, () => this.scene.start('levelone'));
@@ -28,7 +49,12 @@ class Intro2 extends Phaser.Scene {
     create() {
         let screenCenterX = this.cameras.main.worldView.x + this.cameras.main.width / 2;
         let screenCenterY = this.cameras.main.worldView.y + this.cameras.main.height / 2;
-        this.add.text(screenCenterX, screenCenterY, 'Click to begin level two.').setOrigin(0.5);
+        this.add.text(100, 50, 'Great Job!', {fontSize: 25}).setOrigin(0.5).setTint(0x000000);
+        this.add.text(50, 100, 'Level 2 Incoming!').setTint(0x000000);
+        this.add.text(50, 175, "Time to last: 20 seconds").setTint(0x000000);
+        this.add.text(50, 250, "Terrain: Grassland + island.").setTint(0x000000);
+        this.add.text(50, 325, "Good luck!").setTint(0x000000);
+        this.add.text(screenCenterX, screenCenterY, 'Click to begin level two.').setOrigin(0.5).setTint(0x000000);
         this.input.on('pointerdown', () => {
             this.cameras.main.fadeOut(1000, 0,0,0);
             this.time.delayedCall(1000, () => this.scene.start('leveltwo'));
@@ -43,7 +69,12 @@ class Intro3 extends Phaser.Scene {
     create() {
         let screenCenterX = this.cameras.main.worldView.x + this.cameras.main.width / 2;
         let screenCenterY = this.cameras.main.worldView.y + this.cameras.main.height / 2;
-        this.add.text(screenCenterX, screenCenterY, 'Click to begin level three.').setOrigin(0.5);
+        this.add.text(100, 50, 'Great Job!', {fontSize: 25}).setOrigin(0.5).setTint(0x000000);
+        this.add.text(50, 100, 'Level 3 Incoming!').setTint(0x000000);
+        this.add.text(50, 175, "Time to last: 20 seconds").setTint(0x000000);
+        this.add.text(50, 250, "Terrain: Grassland + MORE islands!").setTint(0x000000);
+        this.add.text(50, 325, "Good luck!").setTint(0x000000);
+        this.add.text(screenCenterX, screenCenterY, 'Click to begin level three.').setOrigin(0.5).setTint(0x000000);
         this.input.on('pointerdown', () => {
             this.cameras.main.fadeOut(1000, 0,0,0);
             this.time.delayedCall(1000, () => this.scene.start('levelthree'));
@@ -58,7 +89,9 @@ class Ending extends Phaser.Scene {
     create() {
         let screenCenterX = this.cameras.main.worldView.x + this.cameras.main.width / 2;
         let screenCenterY = this.cameras.main.worldView.y + this.cameras.main.height / 2;
-        this.add.text(screenCenterX, screenCenterY, 'The end. Click to restart.').setOrigin(0.5);
+        this.add.text(25, screenCenterY - 100, 'Hooray! Larry has outlasted the evil soccer balls, and may now go back to his sedentary lifestyle.').setTint(0x000000);
+        this.add.text(screenCenterX - 40, screenCenterY - 50, 'The End.').setTint(0x000000);
+        this.add.text(screenCenterX, screenCenterY, 'Click to restart.').setOrigin(0.5).setTint(0x000000);
         this.input.on('pointerdown', () => {
             this.cameras.main.fadeOut(1000, 0,0,0);
             this.time.delayedCall(1000, () => this.scene.start('intro'));
@@ -374,5 +407,5 @@ new Phaser.Game({
             debug: false
         }
     },
-    scene: [ Intro,LevelThree, LevelOne, Intro2, LevelTwo, Intro3, Ending],
+    scene: [ Ending, Intro, Controls, LevelOne, Intro2, LevelTwo, Intro3, LevelThree],
 });
