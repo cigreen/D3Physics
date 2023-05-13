@@ -223,6 +223,18 @@ class LevelThree extends Phaser.Scene {
         this.load.image("ground", "ground.png");
     }
     create() {
+        this.platformOne = this.physics.add.image(800, 400, 'ground').setScale(0.5);
+        this.platformOne.setImmovable(true);
+        this.platformOne.body.allowGravity = false;
+
+        this.platformTwo = this.physics.add.image(200, 300, 'ground').setScale(0.5);
+        this.platformTwo.setImmovable(true);
+        this.platformTwo.body.allowGravity = false;
+
+        this.platformThree = this.physics.add.image(825, 200, 'ground').setScale(0.5);
+        this.platformThree.setImmovable(true);
+        this.platformThree.body.allowGravity = false;
+
         const beer = this.physics.add.image(800, 500, 'beer').setScale(0.2);
         this.larry = this.physics.add.sprite(100, 350, 'larry').setScale(0.5);
        
@@ -236,7 +248,7 @@ class LevelThree extends Phaser.Scene {
         this.balls = this.physics.add.group({
             key: 'ball',
             repeat: 6,
-            setXY: { x: 300, y: 525, stepX: 150 },
+            setXY: { x: 300, y: 125, stepX: 150 },
             bounceX: 1,
             collideWorldBounds: true,
             velocityX: -100
@@ -252,10 +264,19 @@ class LevelThree extends Phaser.Scene {
         this.physics.add.collider(this.larry, this.platforms);
         this.physics.add.collider(this.platforms, this.balls);
         this.physics.add.collider(this.platforms, beer);
+
+        this.physics.add.collider(this.platformOne, this.balls);
+        this.physics.add.collider(this.platformTwo, this.balls);
+        this.physics.add.collider(this.platformThree, this.balls);
+
+        this.physics.add.collider(this.platformOne, this.larry);
+        this.physics.add.collider(this.platformTwo, this.larry);
+        this.physics.add.collider(this.platformThree, this.larry);
+
         const touchBall = this.physics.add.overlap(this.larry, this.balls, (larry, ball) =>
         {
             ball.disableBody(true, true);
-            this.scene.start('levelone');
+            this.scene.start('levelthree');
         });
         // when colliding with beer, become invulnerable
         this.physics.add.overlap(this.larry, beer, (larry, _beer) =>
