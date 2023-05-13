@@ -26,7 +26,6 @@ class Intro2 extends Phaser.Scene {
         super('intro2');
     }
     create() {
-        // center the text to the middle of the screen. code from https://www.stephengarside.co.uk/blog/phaser-3-center-text-in-middle-of-screen/
         let screenCenterX = this.cameras.main.worldView.x + this.cameras.main.width / 2;
         let screenCenterY = this.cameras.main.worldView.y + this.cameras.main.height / 2;
         this.add.text(screenCenterX, screenCenterY, 'Click to begin level two.').setOrigin(0.5);
@@ -42,7 +41,6 @@ class Intro3 extends Phaser.Scene {
         super('intro3');
     }
     create() {
-        // center the text to the middle of the screen. code from https://www.stephengarside.co.uk/blog/phaser-3-center-text-in-middle-of-screen/
         let screenCenterX = this.cameras.main.worldView.x + this.cameras.main.width / 2;
         let screenCenterY = this.cameras.main.worldView.y + this.cameras.main.height / 2;
         this.add.text(screenCenterX, screenCenterY, 'Click to begin level three.').setOrigin(0.5);
@@ -58,7 +56,6 @@ class Ending extends Phaser.Scene {
         super('ending');
     }
     create() {
-        // center the text to the middle of the screen. code from https://www.stephengarside.co.uk/blog/phaser-3-center-text-in-middle-of-screen/
         let screenCenterX = this.cameras.main.worldView.x + this.cameras.main.width / 2;
         let screenCenterY = this.cameras.main.worldView.y + this.cameras.main.height / 2;
         this.add.text(screenCenterX, screenCenterY, 'The end. Click to restart.').setOrigin(0.5);
@@ -73,12 +70,10 @@ class LevelOne extends Phaser.Scene {
     constructor() {
         super('levelone');
     }
-    // move to intro after getting your collision problem fixed.
     create() {
         const beer = this.physics.add.image(800, 500, 'beer').setScale(0.2);
-        this.larry = this.physics.add.sprite(100, 350, 'larry').setScale(0.5);
+        this.larry = this.physics.add.sprite(100, 500, 'larry').setScale(0.5);
        
-        // after 10 seconds, go to intro SWITCH THAT THIS WORKS POG
         this.time.delayedCall(10000, () => this.scene.start('intro2'));
         this.platforms = this.physics.add.staticGroup();
         this.platforms.create(400, 600, 'ground').setScale(2).refreshBody();
@@ -153,12 +148,10 @@ class LevelTwo extends Phaser.Scene {
     constructor() {
         super('leveltwo');
     }
-    // move to intro after getting your collision problem fixed.
     create() {
         const beer = this.physics.add.image(800, 500, 'beer').setScale(0.2);
-        this.larry = this.physics.add.sprite(100, 350, 'larry').setScale(0.5);
+        this.larry = this.physics.add.sprite(100, 500, 'larry').setScale(0.5);
        
-        // after 10 seconds, go to intro SWITCH THAT THIS WORKS POG
         this.time.delayedCall(10000, () => this.scene.start('intro3'));
         this.platforms = this.physics.add.staticGroup();
         this.platforms.create(400, 600, 'ground').setScale(2).refreshBody();
@@ -197,7 +190,6 @@ class LevelTwo extends Phaser.Scene {
             ball.disableBody(true, true);
             this.scene.start('leveltwo');
         });
-        // when colliding with beer, become invulnerable
         this.physics.add.overlap(this.larry, beer, (larry, _beer) =>
         {
             touchBall.active = false;
@@ -248,7 +240,6 @@ class LevelThree extends Phaser.Scene {
     constructor() {
         super('levelthree');
     }
-    // move to intro after getting your collision problem fixed.
     create() {
         this.platformOne = this.physics.add.image(800, 400, 'ground').setScale(0.5);
         this.platformOne.setImmovable(true);
@@ -263,9 +254,8 @@ class LevelThree extends Phaser.Scene {
         this.platformThree.body.allowGravity = false;
 
         const beer = this.physics.add.image(800, 500, 'beer').setScale(0.2);
-        this.larry = this.physics.add.sprite(100, 350, 'larry').setScale(0.5);
+        this.larry = this.physics.add.sprite(100, 500, 'larry').setScale(0.5);
        
-        // after 10 seconds, go to intro SWITCH THAT THIS WORKS POG
         this.time.delayedCall(10000, () => this.scene.start('ending'));
         this.platforms = this.physics.add.staticGroup();
         this.platforms.create(400, 600, 'ground').setScale(2).refreshBody();
@@ -305,7 +295,6 @@ class LevelThree extends Phaser.Scene {
             ball.disableBody(true, true);
             this.scene.start('levelthree');
         });
-        // when colliding with beer, become invulnerable
         this.physics.add.overlap(this.larry, beer, (larry, _beer) =>
         {
             touchBall.active = false;
@@ -353,7 +342,7 @@ new Phaser.Game({
         default: 'arcade',
         arcade: {
             gravity: { y: 400 },
-            debug: true
+            debug: false
         }
     },
     scene: [Intro, LevelOne, Intro2, LevelTwo, Intro3, LevelThree, Ending],
