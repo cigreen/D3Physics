@@ -74,7 +74,7 @@ class LevelOne extends Phaser.Scene {
         const beer = this.physics.add.image(800, 500, 'beer').setScale(0.2);
         this.larry = this.physics.add.sprite(100, 500, 'larry').setScale(0.5);
 
-        this.time.delayedCall(10000, () => this.scene.start('intro2'));
+        this.time.delayedCall(20000, () => this.scene.start('intro2'));
         this.platforms = this.physics.add.staticGroup();
         this.platforms.create(400, 600, 'ground').setScale(2).refreshBody();
 
@@ -163,11 +163,11 @@ class LevelTwo extends Phaser.Scene {
         const beer = this.physics.add.image(800, 500, 'beer').setScale(0.2);
         this.larry = this.physics.add.sprite(100, 500, 'larry').setScale(0.5);
        
-        this.time.delayedCall(10000, () => this.scene.start('intro3'));
+        this.time.delayedCall(20000, () => this.scene.start('intro3'));
         this.platforms = this.physics.add.staticGroup();
         this.platforms.create(400, 600, 'ground').setScale(2).refreshBody();
 
-        this.movingPlatform = this.physics.add.image(600, 500, 'ground').setScale(0.5);
+        this.movingPlatform = this.physics.add.image(600, 200, 'ground').setScale(0.5);
 
         this.movingPlatform.setImmovable(true);
         this.movingPlatform.body.allowGravity = false;
@@ -178,7 +178,7 @@ class LevelTwo extends Phaser.Scene {
         this.balls = this.physics.add.group({
             key: 'ball',
             repeat: 6,
-            setXY: { x: 300, y: 325, stepX: 150 },
+            setXY: { x: 300, y: 125, stepX: 150 },
             bounceX: 1,
             collideWorldBounds: true,
             velocityX: -100
@@ -261,11 +261,11 @@ class LevelThree extends Phaser.Scene {
         super('levelthree');
     }
     create() {
-        this.platformOne = this.physics.add.image(800, 400, 'ground').setScale(0.5);
+        this.platformOne = this.physics.add.image(800, 300, 'ground').setScale(0.5);
         this.platformOne.setImmovable(true);
         this.platformOne.body.allowGravity = false;
 
-        this.platformTwo = this.physics.add.image(200, 300, 'ground').setScale(0.5);
+        this.platformTwo = this.physics.add.image(250, 250, 'ground').setScale(0.5);
         this.platformTwo.setImmovable(true);
         this.platformTwo.body.allowGravity = false;
 
@@ -276,7 +276,7 @@ class LevelThree extends Phaser.Scene {
         const beer = this.physics.add.image(800, 500, 'beer').setScale(0.2);
         this.larry = this.physics.add.sprite(100, 500, 'larry').setScale(0.5);
        
-        this.time.delayedCall(10000, () => this.scene.start('ending'));
+        this.time.delayedCall(20000, () => this.scene.start('ending'));
         this.platforms = this.physics.add.staticGroup();
         this.platforms.create(400, 600, 'ground').setScale(2).refreshBody();
 
@@ -374,5 +374,5 @@ new Phaser.Game({
             debug: false
         }
     },
-    scene: [Intro, LevelOne, Intro2, LevelTwo, Intro3, LevelThree, Ending],
+    scene: [ Intro,LevelThree, LevelOne, Intro2, LevelTwo, Intro3, Ending],
 });
