@@ -407,5 +407,5 @@ new Phaser.Game({
             debug: false
         }
     },
-    scene: [ Ending, Intro, Controls, LevelOne, Intro2, LevelTwo, Intro3, LevelThree],
+    scene: [Intro, Controls, LevelOne, Intro2, LevelTwo, Intro3, LevelThree, Ending],
 });
